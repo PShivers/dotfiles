@@ -29,14 +29,56 @@
 	"workbench.colorTheme": "Sublime Monokai",
 	"workbench.sideBar.location": "right",
 	"workbench.colorCustomizations": {
-		"tab.activeBackground": "#393a32",
-		"tab.activeBorder": "#cbad2a",
-		"tab.activeBorderTop": "#cbad2a",
-		"tab.activeForeground": "#cbad2a",
-		"tab.inactiveBackground": "#272822",
-		"tab.hoverBackground": "#171717",
-		"statusBar.background": "#1e1f1c",
-		"statusBar.border": "#cbad2a"
+		"[Sublime Monokai]": {
+			"tab.activeBackground": "#393a32",
+			"tab.activeBorder": "#cbad2a",
+			"tab.activeBorderTop": "#cbad2a",
+			"tab.activeForeground": "#cbad2a",
+			"tab.inactiveBackground": "#272822",
+			"tab.hoverBackground": "#171717",
+			"statusBar.background": "#1e1f1c",
+			"statusBar.border": "#cbad2a"
+		},
+		"[Catppuccin Mocha]": {
+			"tab.activeBackground": "#1e1e2e",
+			"tab.activeBorder": "#cba6f7",
+			"tab.activeBorderTop": "#cba6f7",
+			"tab.activeForeground": "#cba6f7",
+			"tab.inactiveBackground": "#181825",
+			"tab.hoverBackground": "#28283d",
+			"statusBar.background": "#11111b",
+			"statusBar.border": "#cba6f7"
+		},
+		"[Catppuccin Frappé]": {
+			"tab.activeBackground": "#303446",
+			"tab.activeBorder": "#ca9ee6",
+			"tab.activeBorderTop": "#ca9ee6",
+			"tab.activeForeground": "#ca9ee6",
+			"tab.inactiveBackground": "#292c3c",
+			"tab.hoverBackground": "#3a3f55",
+			"statusBar.background": "#232634",
+			"statusBar.border": "#ca9ee6"
+		},
+		"[Catppuccin Macchiato]": {
+			"tab.activeBackground": "#24273a",
+			"tab.activeBorder": "#c6a0f6",
+			"tab.activeBorderTop": "#c6a0f6",
+			"tab.activeForeground": "#c6a0f6",
+			"tab.inactiveBackground": "#1e2030",
+			"tab.hoverBackground": "#2e324a",
+			"statusBar.background": "#181926",
+			"statusBar.border": "#c6a0f6"
+		},
+		"[Catppuccin Latte]": {
+			"tab.activeBackground": "#e6e9ef",
+			"tab.activeBorder": "#8839ef",
+			"tab.activeBorderTop": "#8839ef",
+			"tab.activeForeground": "#8839ef",
+			"tab.inactiveBackground": "#ccd0da",
+			"tab.hoverBackground": "#bcc0cc",
+			"statusBar.background": "#dce0e8",
+			"statusBar.border": "#8839ef"
+		}
 	},
 	//my settings for font and theme
 	"editor.tokenColorCustomizations": {
