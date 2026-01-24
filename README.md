@@ -88,35 +88,15 @@ The Zsh configuration includes:
 - Sensible defaults for history
 - Useful aliases for navigation and git
 - Helper functions (mkcd, extract)
-- Oh My Zsh integration with plugins (git, docker, kubectl, node, npm, python)
+- Oh My Zsh compatibility (commented out by default)
 
-#### Setting Zsh as Default Shell
-
-The install script only creates symlinks for the `.zshrc` file. To make zsh your default shell:
-
-**On WSL/Linux:**
-
-```bash
-# Install zsh if not already installed
-sudo apt install zsh
-
-# Set zsh as your default shell
-chsh -s $(which zsh)
-
-# Log out and log back in for changes to take effect
-```
-
-**On Windows Terminal:**
-
-To make WSL/Ubuntu (with zsh) your default profile, update the `defaultProfile` GUID in Windows Terminal settings to match your Ubuntu profile.
-
-#### Oh My Zsh
-
-Oh My Zsh is already enabled in the `.zshrc` configuration. To install it:
+To enable Oh My Zsh, install it first:
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
+
+Then uncomment the Oh My Zsh sections in [shell/.zshrc](shell/.zshrc).
 
 ### VSCode
 
