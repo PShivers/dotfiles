@@ -1,0 +1,27 @@
+# VSCode Extensions
+# Install with: cat extensions.txt | xargs -L 1 code --install-extension
+
+# General
+ms-vscode.vscode-typescript-next
+esbenp.prettier-vscode
+dbaeumer.vscode-eslint
+editorconfig.editorconfig
+
+# Git
+eamodio.gitlens
+mhutchie.git-graph
+
+# Languages
+ms-python.python
+ms-python.vscode-pylance
+golang.go
+rust-lang.rust-analyzer
+
+# Utilities
+gruntfuggly.todo-tree
+streetsidesoftware.code-spell-checker
+wayou.vscode-todo-highlight
+
+# Themes
+zhuangtongfa.material-theme
+pkief.material-icon-theme
