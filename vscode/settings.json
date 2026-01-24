@@ -80,7 +80,6 @@
 			"statusBar.border": "#8839ef"
 		}
 	},
-	//my settings for font and theme
 	"editor.tokenColorCustomizations": {
 		"[Sublime Monokai]": {
 			"textMateRules": [
@@ -117,63 +116,184 @@
 						"fontStyle": "bold underline"
 					}
 				},
-
 				{
 					"scope": ["support.variable.property.js"],
 					"settings": {
 						"fontStyle": ""
 					}
 				}
-
-				// 		{
-				// 			"scope": "variable.other.readwrite.js",
-				// 			"settings": {
-				// 				"foreground": "#f0efef",
-				// 				"fontStyle": "bold"
-				// 			}
-				// 		},
-				// 		{
-				// 			"scope": ["variable.parameter.js"],
-				// 			"settings": {
-				// 				"foreground": "#FD971F",
-				// 				"fontStyle": "italic"
-				// 			}
-				// 		},
-				// 		{
-				// 			"scope": ["variable.other.object.js"],
-				// 			"settings": {
-				// 				"foreground": "#a7a96d",
-				// 				"fontStyle": "bold"
-				// 			}
-				// 		},
-				// 		{
-				// 			"scope": ["variable.other.property.js"],
-				// 			"settings": {
-				// 				"foreground": "#e1e495",
-				// 				"fontStyle": "italic"
-				// 			}
-				// 		},
-				// 		{
-				// 			"scope": ["entity.name.function.js"],
-				// 			"settings": {
-				// 				"foreground": "#fc8888",
-				// 				"fontStyle": "italic"
-				// 			}
-				// 		},
-				// 		{
-				// 			"scope": ["comment.line.double-slash.js"],
-				// 			"settings": {
-				// 				"foreground": "#ABB2BF",
-				// 				"fontStyle": "italic underline"
-				// 			}
-				// 		},
-				// 		{
-				// 			"scope": ["string", "punctuation.definition.string"],
-				// 			"settings": {
-				// 				"foreground": "#83e63c",
-				// 				"fontStyle": "italic"
-				// 			}
-				// 		}
+			]
+		},
+		"[Catppuccin Mocha]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#cdd6f4",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#fab387",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[Catppuccin Frappé]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#c6d0f5",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#ef9f76",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[Catppuccin Macchiato]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#cad3f5",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#f5a97f",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[Catppuccin Latte]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#4c4f69",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#fe640b",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
 			]
 		}
 	},
