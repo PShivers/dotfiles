@@ -118,6 +118,37 @@ install_vscode_config() {
         done
         print_success "VSCode extensions installed"
     fi
+
+    # Install custom themes
+    if [ -d "$DOTFILES_DIR/vscode/themes" ]; then
+        print_header "Installing Custom VSCode Themes"
+
+        # Determine VSCode extensions directory
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            VSCODE_EXT_DIR="$HOME/.vscode/extensions"
+        elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+            VSCODE_EXT_DIR="$HOME/.vscode/extensions"
+        else
+            VSCODE_EXT_DIR="$HOME/.vscode/extensions"
+        fi
+
+        # Copy theme directories
+        for theme_dir in "$DOTFILES_DIR/vscode/themes"/*; do
+            if [ -d "$theme_dir" ]; then
+                theme_name=$(basename "$theme_dir")
+                target_dir="$VSCODE_EXT_DIR/$theme_name"
+
+                # Remove existing theme if present
+                if [ -d "$target_dir" ]; then
+                    rm -rf "$target_dir"
+                fi
+
+                # Copy theme to extensions directory
+                cp -r "$theme_dir" "$target_dir"
+                print_success "Installed theme: $theme_name"
+            fi
+        done
+    fi
 }
 
 install_terminal_config() {

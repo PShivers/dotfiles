@@ -23,7 +23,11 @@ dotfiles/
 ├── vscode/             # VSCode settings
 │   ├── settings.json   # Editor settings
 │   ├── keybindings.json  # Keyboard shortcuts
-│   └── extensions.txt  # List of extensions
+│   ├── extensions.txt  # List of extensions
+│   └── themes/         # Custom themes
+│       ├── catppuccin/       # Catppuccin theme
+│       ├── catppuccin-icons/ # Catppuccin icons
+│       └── sublime-monokai/  # Sublime Monokai theme
 ├── windows-terminal/   # Windows Terminal config
 │   └── settings.json   # Terminal settings
 ├── scripts/            # Utility scripts
@@ -96,10 +100,28 @@ Then uncomment the Oh My Zsh sections in [shell/.zshrc](shell/.zshrc).
 
 ### VSCode
 
+The VSCode configuration includes personal settings, keybindings, a curated list of extensions, and custom themes.
+
 To install all extensions from [vscode/extensions.txt](vscode/extensions.txt):
 
 ```bash
 cat vscode/extensions.txt | grep -v '^#' | grep -v '^$' | xargs -L 1 code --install-extension
+```
+
+#### Custom Themes
+
+The [vscode/themes/](vscode/themes/) directory contains custom theme files. Currently includes:
+
+- **Catppuccin** - Soothing pastel theme with 4 variants (Latte, Frappé, Macchiato, Mocha)
+- **Catppuccin Icons** - Matching icon theme
+- **Sublime Monokai** - A faithful recreation of Sublime Text's Monokai theme
+
+The install script automatically copies custom themes to your VSCode extensions directory. To manually install a theme:
+
+```bash
+cp -r vscode/themes/catppuccin ~/.vscode/extensions/
+cp -r vscode/themes/catppuccin-icons ~/.vscode/extensions/
+cp -r vscode/themes/sublime-monokai ~/.vscode/extensions/
 ```
 
 ### Windows Terminal
