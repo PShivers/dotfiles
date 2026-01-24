@@ -125,5 +125,5 @@ extract() {
 # Oh My Zsh (Uncomment if using)
 # ============================================================================
 
-# plugins=(git docker kubectl node npm python)
-# source $ZSH/oh-my-zsh.sh
+plugins=(git docker kubectl node npm python)
+source $ZSH/oh-my-zsh.sh
