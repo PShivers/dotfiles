@@ -1,10 +1,9 @@
 [user]
-	# Update these with your information
-	name = Your Name
-	email = your.email@example.com
+	name = Paul Shivers
+	email = PaulSShivers@gmail.com
 
 [core]
-	editor = vim
+	editor = micro
 	autocrlf = input
 	excludesfile = ~/.gitignore_global
 
@@ -28,58 +27,58 @@
 	conflictstyle = diff3
 
 [alias]
-	# Status and info
-	st = status
-	s = status -sb
+	# # Status and info
+	# st = status
+	# s = status -sb
 
-	# Staging
-	a = add
-	aa = add --all
-	ap = add --patch
+	# # Staging
+	# a = add
+	# aa = add --all
+	# ap = add --patch
 
-	# Committing
-	c = commit
-	cm = commit -m
-	ca = commit --amend
-	can = commit --amend --no-edit
+	# # Committing
+	# c = commit
+	# cm = commit -m
+	# ca = commit --amend
+	# can = commit --amend --no-edit
 
-	# Branching
-	b = branch
-	ba = branch -a
-	bd = branch -d
-	bD = branch -D
+	# # Branching
+	# b = branch
+	# ba = branch -a
+	# bd = branch -d
+	# bD = branch -D
 
-	# Checking out
-	co = checkout
-	cob = checkout -b
+	# # Checking out
+	# co = checkout
+	# cob = checkout -b
 
-	# Diffing
-	d = diff
-	ds = diff --staged
-	dw = diff --word-diff
+	# # Diffing
+	# d = diff
+	# ds = diff --staged
+	# dw = diff --word-diff
 
-	# Logging
-	l = log --oneline --graph --decorate
-	la = log --oneline --graph --decorate --all
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-	last = log -1 HEAD --stat
+	# # Logging
+	# l = log --oneline --graph --decorate
+	# la = log --oneline --graph --decorate --all
+	# lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	# last = log -1 HEAD --stat
 
-	# Remote
-	p = push
-	pl = pull
-	pf = push --force-with-lease
-	f = fetch
+	# # Remote
+	# p = push
+	# pl = pull
+	# pf = push --force-with-lease
+	# f = fetch
 
-	# Stashing
-	stash-all = stash save --include-untracked
+	# # Stashing
+	# stash-all = stash save --include-untracked
 
-	# Undoing
-	unstage = reset HEAD --
-	undo = reset --soft HEAD^
+	# # Undoing
+	# unstage = reset HEAD --
+	# undo = reset --soft HEAD^
 
-	# Misc
-	aliases = config --get-regexp alias
-	contributors = shortlog --summary --numbered
+	# # Misc
+	# aliases = config --get-regexp alias
+	# contributors = shortlog --summary --numbered
 
 [color]
 	ui = auto
