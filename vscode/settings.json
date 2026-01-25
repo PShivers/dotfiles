@@ -30,57 +30,110 @@
 	"workbench.sideBar.location": "right",
 	"workbench.colorCustomizations": {
 		"[Sublime Monokai]": {
-			"tab.activeBackground": "#393a32",
-			"tab.activeBorder": "#cbad2a",
 			"tab.activeBorderTop": "#cbad2a",
-			"tab.activeForeground": "#cbad2a",
-			"tab.inactiveBackground": "#272822",
+			"tab.inactiveForeground": "#9e9f9e",
+			"panelTitle.activeBorder": "#ffc600",
 			"tab.hoverBackground": "#171717",
 			"statusBar.background": "#1e1f1c",
 			"statusBar.border": "#cbad2a"
 		},
 		"[Catppuccin Mocha]": {
-			"tab.activeBackground": "#1e1e2e",
-			"tab.activeBorder": "#cba6f7",
 			"tab.activeBorderTop": "#cba6f7",
-			"tab.activeForeground": "#cba6f7",
-			"tab.inactiveBackground": "#181825",
+			"tab.inactiveForeground": "#7f849c",
+			"panelTitle.activeBorder": "#cba6f7",
 			"tab.hoverBackground": "#28283d",
 			"statusBar.background": "#11111b",
 			"statusBar.border": "#cba6f7"
 		},
 		"[Catppuccin Frappé]": {
-			"tab.activeBackground": "#303446",
-			"tab.activeBorder": "#ca9ee6",
 			"tab.activeBorderTop": "#ca9ee6",
-			"tab.activeForeground": "#ca9ee6",
-			"tab.inactiveBackground": "#292c3c",
+			"tab.inactiveForeground": "#838ba7",
+			"panelTitle.activeBorder": "#ca9ee6",
 			"tab.hoverBackground": "#3a3f55",
 			"statusBar.background": "#232634",
 			"statusBar.border": "#ca9ee6"
 		},
 		"[Catppuccin Macchiato]": {
-			"tab.activeBackground": "#24273a",
-			"tab.activeBorder": "#c6a0f6",
 			"tab.activeBorderTop": "#c6a0f6",
-			"tab.activeForeground": "#c6a0f6",
-			"tab.inactiveBackground": "#1e2030",
+			"tab.inactiveForeground": "#8087a2",
+			"panelTitle.activeBorder": "#c6a0f6",
 			"tab.hoverBackground": "#2e324a",
 			"statusBar.background": "#181926",
 			"statusBar.border": "#c6a0f6"
 		},
 		"[Catppuccin Latte]": {
-			"tab.activeBackground": "#e6e9ef",
-			"tab.activeBorder": "#8839ef",
 			"tab.activeBorderTop": "#8839ef",
-			"tab.activeForeground": "#8839ef",
-			"tab.inactiveBackground": "#ccd0da",
+			"tab.inactiveForeground": "#8c8fa1",
+			"panelTitle.activeBorder": "#8839ef",
 			"tab.hoverBackground": "#bcc0cc",
 			"statusBar.background": "#dce0e8",
 			"statusBar.border": "#8839ef"
+		},
+		"[Monokai Dark Soda]": {
+			"tab.activeBorderTop": "#66d9ef",
+			"tab.inactiveForeground": "#8f908a",
+			"panelTitle.activeBorder": "#66d9ef",
+			"tab.hoverBackground": "#262822",
+			"statusBar.background": "#151515",
+			"statusBar.border": "#66d9ef"
+		},
+		"[Atom One Dark]": {
+			"tab.activeBorderTop": "#61afef",
+			"tab.inactiveForeground": "#5c6370",
+			"panelTitle.activeBorder": "#61afef",
+			"tab.hoverBackground": "#2f333d",
+			"statusBar.background": "#1d2026",
+			"statusBar.border": "#61afef"
+		},
+		"[One Monokai]": {
+			"tab.activeBorderTop": "#e5c07b",
+			"tab.inactiveForeground": "#5c6370",
+			"panelTitle.activeBorder": "#e5c07b",
+			"tab.hoverBackground": "#282c34",
+			"statusBar.background": "#1d2026",
+			"statusBar.border": "#e5c07b"
+		},
+		"[One Dark Theme]": {
+			"tab.activeBorderTop": "#98c379",
+			"tab.inactiveForeground": "#5c6370",
+			"panelTitle.activeBorder": "#98c379",
+			"tab.hoverBackground": "#2f333d",
+			"statusBar.background": "#1d2026",
+			"statusBar.border": "#98c379"
+		},
+		"[One Monokai Darker Spectrum]": {
+			"tab.activeBorderTop": "#fd971f",
+			"tab.inactiveForeground": "#75715e",
+			"panelTitle.activeBorder": "#fd971f",
+			"tab.hoverBackground": "#2a2b26",
+			"statusBar.background": "#0f100d",
+			"statusBar.border": "#fd971f"
+		},
+		"[SynthWave '84]": {
+			"tab.activeBorderTop": "#ff7edb",
+			"tab.inactiveForeground": "#848bbd",
+			"panelTitle.activeBorder": "#ff7edb",
+			"tab.hoverBackground": "#2d2a3d",
+			"statusBar.background": "#181520",
+			"statusBar.border": "#ff7edb"
+		},
+		"[Super One Dark]": {
+			"tab.activeBorderTop": "#56b6c2",
+			"tab.inactiveForeground": "#5c6370",
+			"panelTitle.activeBorder": "#56b6c2",
+			"tab.hoverBackground": "#2c313a",
+			"statusBar.background": "#181a1f",
+			"statusBar.border": "#56b6c2"
+		},
+		"[One Dark Pro]": {
+			"tab.activeBorderTop": "#c678dd",
+			"tab.inactiveForeground": "#5c6370",
+			"panelTitle.activeBorder": "#c678dd",
+			"tab.hoverBackground": "#2f333d",
+			"statusBar.background": "#1d2026",
+			"statusBar.border": "#c678dd"
 		}
 	},
-	//my settings for font and theme
 	"editor.tokenColorCustomizations": {
 		"[Sublime Monokai]": {
 			"textMateRules": [
@@ -117,63 +170,528 @@
 						"fontStyle": "bold underline"
 					}
 				},
-
 				{
 					"scope": ["support.variable.property.js"],
 					"settings": {
 						"fontStyle": ""
 					}
 				}
-
-				// 		{
-				// 			"scope": "variable.other.readwrite.js",
-				// 			"settings": {
-				// 				"foreground": "#f0efef",
-				// 				"fontStyle": "bold"
-				// 			}
-				// 		},
-				// 		{
-				// 			"scope": ["variable.parameter.js"],
-				// 			"settings": {
-				// 				"foreground": "#FD971F",
-				// 				"fontStyle": "italic"
-				// 			}
-				// 		},
-				// 		{
-				// 			"scope": ["variable.other.object.js"],
-				// 			"settings": {
-				// 				"foreground": "#a7a96d",
-				// 				"fontStyle": "bold"
-				// 			}
-				// 		},
-				// 		{
-				// 			"scope": ["variable.other.property.js"],
-				// 			"settings": {
-				// 				"foreground": "#e1e495",
-				// 				"fontStyle": "italic"
-				// 			}
-				// 		},
-				// 		{
-				// 			"scope": ["entity.name.function.js"],
-				// 			"settings": {
-				// 				"foreground": "#fc8888",
-				// 				"fontStyle": "italic"
-				// 			}
-				// 		},
-				// 		{
-				// 			"scope": ["comment.line.double-slash.js"],
-				// 			"settings": {
-				// 				"foreground": "#ABB2BF",
-				// 				"fontStyle": "italic underline"
-				// 			}
-				// 		},
-				// 		{
-				// 			"scope": ["string", "punctuation.definition.string"],
-				// 			"settings": {
-				// 				"foreground": "#83e63c",
-				// 				"fontStyle": "italic"
-				// 			}
-				// 		}
+			]
+		},
+		"[Catppuccin Mocha]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#cdd6f4",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#fab387",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[Catppuccin Frappé]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#c6d0f5",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#ef9f76",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[Catppuccin Macchiato]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#cad3f5",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#f5a97f",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[Catppuccin Latte]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#4c4f69",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#fe640b",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[Monokai Dark Soda]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#f8f8f2",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#fd971f",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[Atom One Dark]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#abb2bf",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#d19a66",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[One Monokai]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#abb2bf",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#e5c07b",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[One Dark Theme]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#abb2bf",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#e06c75",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[One Monokai Darker Spectrum]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#f8f8f2",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#fd971f",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[SynthWave '84]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#f2f2f2",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#fede5d",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[Super One Dark]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#abb2bf",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#d19a66",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
+			]
+		},
+		"[One Dark Pro]": {
+			"textMateRules": [
+				{
+					"scope": ["meta.jsx.children.js"],
+					"settings": {
+						"foreground": "#abb2bf",
+						"fontStyle": "italic"
+					}
+				},
+				{
+					"scope": [
+						"variable.other.readwrite.alias.js",
+						"variable.other.readwrite.js"
+					],
+					"settings": {
+						"foreground": "#e5c07b",
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": ["variable.other.constant.js"],
+					"settings": {
+						"fontStyle": "bold"
+					}
+				},
+				{
+					"scope": [
+						"punctuation.section.embedded.begin.js",
+						"punctuation.section.embedded.end.js",
+						"variable.other.object.js"
+					],
+					"settings": {
+						"fontStyle": "bold underline"
+					}
+				},
+				{
+					"scope": ["support.variable.property.js"],
+					"settings": {
+						"fontStyle": ""
+					}
+				}
 			]
 		}
 	},

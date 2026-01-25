@@ -11,6 +11,7 @@ Personal dotfiles for maintaining consistent development environments across mac
 ### VSCode Settings (`vscode/settings.json`)
 
 **Custom Theme Customizations:**
+
 - Theme-scoped color customizations for tab UI elements
 - Each theme (Sublime Monokai, Catppuccin variants) has matching colors for:
   - `tab.activeBackground`, `tab.activeBorder`, `tab.activeBorderTop`, `tab.activeForeground`
@@ -20,18 +21,21 @@ Personal dotfiles for maintaining consistent development environments across mac
 - Sublime Monokai uses custom yellow accent: `#cbad2a`
 
 **Token Color Customizations:**
+
 - JavaScript-specific syntax highlighting for Sublime Monokai theme
 - Custom styles for JSX, variables, constants, template strings
 
 ### Zsh Configuration (`shell/.zshrc`)
 
 **Current State:**
+
 - Oh My Zsh integration is ENABLED (uncommented in lines 128-129)
 - Plugins: git, docker, kubectl, node, npm, python
 - Includes custom aliases, functions (mkcd, extract)
 - Sources `.zshrc.local` if it exists for machine-specific configs
 
 **Important Notes:**
+
 - The install script does NOT install zsh or set it as default shell
 - After install, user must manually:
   1. Install zsh: `sudo apt install zsh` (in WSL)
@@ -55,12 +59,14 @@ Personal dotfiles for maintaining consistent development environments across mac
 ## Installation Script (`install.sh`)
 
 **What it does:**
+
 - Creates symlinks for dotfiles (backs up existing files with timestamps)
 - Installs VSCode extensions from `vscode/extensions.txt`
 - Copies custom themes to VSCode extensions directory
 - Supports selective installation (all, shell only, git only, etc.)
 
 **What it does NOT do:**
+
 - Install zsh or any shell
 - Run `chsh` to change default shell
 - Modify Windows Terminal default profile
@@ -74,6 +80,7 @@ Personal dotfiles for maintaining consistent development environments across mac
 ## Custom Themes
 
 Located in `vscode/themes/`:
+
 - `catppuccin/` - Catppuccin theme (4 variants: Latte, Frappé, Macchiato, Mocha)
 - `catppuccin-icons/` - Catppuccin icon theme
 - `sublime-monokai/` - Sublime Monokai theme
@@ -81,11 +88,13 @@ Located in `vscode/themes/`:
 ## Workflow Notes
 
 **When adding new theme customizations:**
+
 - Add theme-scoped entries to `workbench.colorCustomizations`
 - Extract colors from the theme's official color palette (found in `vscode/themes/{theme}/themes/*.json`)
 - Use the theme's accent color for borders and active elements
 
 **Common Tasks:**
+
 - Update VSCode settings: Edit `vscode/settings.json`, changes sync via symlink
 - Add git aliases: Uncomment or add to `git/.gitconfig` aliases section
 - Machine-specific shell config: Use `~/.zshrc.local` (not tracked)
@@ -102,6 +111,7 @@ Located in `vscode/themes/`:
 ## Extension List
 
 VSCode extensions defined in `vscode/extensions.txt`:
+
 - Themes: Catppuccin, various Monokai variants, One Dark variants, Synthwave
 - Formatters: Prettier, ESLint, EditorConfig
 - Git: GitLens
