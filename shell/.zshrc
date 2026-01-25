@@ -1,18 +1,46 @@
 # ============================================================================
-# Zsh Configuration
+# Zsh Configuration (Oh My Zsh)
 # ============================================================================
 
-# Path to your oh-my-zsh installation (if using)
-# export ZSH="$HOME/.oh-my-zsh"
+# Path configuration
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
 
 # ============================================================================
 # Theme & Appearance
 # ============================================================================
 
-# ZSH_THEME="robbyrussell"  # Uncomment if using oh-my-zsh
+# Set name of the theme to load
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="agnoster"
 
 # Enable colors
 autoload -U colors && colors
+
+# ============================================================================
+# Oh My Zsh Configuration
+# ============================================================================
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # ============================================================================
 # History Configuration
@@ -37,8 +65,29 @@ compinit
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # ============================================================================
+# Plugins
+# ============================================================================
+
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+# ============================================================================
+# Environment Variables
+# ============================================================================
+
+# Default editor
+export EDITOR='micro'
+export VISUAL='micro'
+
+# ============================================================================
 # Aliases
 # ============================================================================
+
+# Micro editor
+alias m="micro"
 
 # Navigation
 alias ..='cd ..'
@@ -50,7 +99,7 @@ alias ll='ls -lah'
 alias la='ls -A'
 alias l='ls -CF'
 
-# Git shortcuts
+# Git shortcuts (supplements Oh My Zsh git plugin)
 alias g='git'
 alias gs='git status'
 alias ga='git add'
@@ -71,17 +120,6 @@ alias mv='mv -i'
 alias py='python'
 alias pip='python -m pip'
 alias venv='python -m venv'
-
-# ============================================================================
-# Environment Variables
-# ============================================================================
-
-# Default editor
-export EDITOR='vim'
-export VISUAL='vim'
-
-# Add local bin to PATH
-export PATH="$HOME/.local/bin:$PATH"
 
 # ============================================================================
 # Functions
@@ -115,15 +153,22 @@ extract() {
 }
 
 # ============================================================================
+# NVM (Node Version Manager)
+# ============================================================================
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# ============================================================================
+# Homebrew (Linux)
+# ============================================================================
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+
+# ============================================================================
 # Platform Specific Configuration
 # ============================================================================
 
-# Source platform-specific config if it exists
+# Source machine-specific config if it exists
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-
-# ============================================================================
-# Oh My Zsh (Uncomment if using)
-# ============================================================================
-
-plugins=(git docker kubectl node npm python)
-source $ZSH/oh-my-zsh.sh

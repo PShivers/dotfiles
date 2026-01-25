@@ -163,6 +163,21 @@ install_terminal_config() {
     fi
 }
 
+install_micro_config() {
+    print_header "Installing Micro Editor Configuration"
+
+    MICRO_DIR="$HOME/.config/micro"
+    mkdir -p "$MICRO_DIR"
+
+    if [ -f "$DOTFILES_DIR/micro/settings.json" ]; then
+        create_symlink "$DOTFILES_DIR/micro/settings.json" "$MICRO_DIR/settings.json"
+    fi
+
+    if [ -f "$DOTFILES_DIR/micro/bindings.json" ]; then
+        create_symlink "$DOTFILES_DIR/micro/bindings.json" "$MICRO_DIR/bindings.json"
+    fi
+}
+
 # ============================================================================
 # Main Installation
 # ============================================================================
@@ -178,9 +193,10 @@ main() {
     echo "3) Git config only"
     echo "4) VSCode config only"
     echo "5) Terminal config only"
-    echo "6) Custom selection"
+    echo "6) Micro editor config only"
+    echo "7) Custom selection"
 
-    read -p "Enter your choice [1-6]: " choice
+    read -p "Enter your choice [1-7]: " choice
 
     case $choice in
         1)
@@ -188,6 +204,7 @@ main() {
             install_git_config
             install_vscode_config
             install_terminal_config
+            install_micro_config
             ;;
         2)
             install_shell_config
@@ -202,6 +219,9 @@ main() {
             install_terminal_config
             ;;
         6)
+            install_micro_config
+            ;;
+        7)
             read -p "Install shell config? [y/N]: " -n 1 -r shell
             echo
             read -p "Install git config? [y/N]: " -n 1 -r git
@@ -210,11 +230,14 @@ main() {
             echo
             read -p "Install terminal config? [y/N]: " -n 1 -r terminal
             echo
+            read -p "Install micro editor config? [y/N]: " -n 1 -r micro
+            echo
 
             [[ $shell =~ ^[Yy]$ ]] && install_shell_config
             [[ $git =~ ^[Yy]$ ]] && install_git_config
             [[ $vscode =~ ^[Yy]$ ]] && install_vscode_config
             [[ $terminal =~ ^[Yy]$ ]] && install_terminal_config
+            [[ $micro =~ ^[Yy]$ ]] && install_micro_config
             ;;
         *)
             print_error "Invalid choice"

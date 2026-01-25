@@ -1,7 +1,7 @@
-# vscode extensions
-# to install: cat extensions.txt | grep -v '^#' | grep -v '^$' | xargs -L 1 code --install-extension
+# VSCode Extensions
+# To install: cat extensions.txt | grep -v '^#' | grep -v '^$' | xargs -L 1 code --install-extension
 
-# themes
+# Themes
 catppuccin.catppuccin-vsc
 catppuccin.catppuccin-vsc-icons
 maximetinu.identical-sublime-monokai-csharp-theme-colorizer
@@ -14,51 +14,63 @@ robbowen.synthwave-vscode
 seansassenrath.vscode-theme-superonedark
 zhuangtongfa.material-theme
 
-# code formatting
-esbenp.prettier-vscode
-dbaeumer.vscode-eslint
-editorconfig.editorconfig
-
-# git
-eamodio.gitlens
-
-# ai tools
+# AI Tools
 anthropic.claude-code
 github.copilot
 github.copilot-chat
-genieai.chatgpt-vscode
 
-# languages
+# Git
+eamodio.gitlens
+
+# Code Formatting & Linting
+dbaeumer.vscode-eslint
+esbenp.prettier-vscode
+davidanson.vscode-markdownlint
+
+# Languages
 angular.ng-template
 bradlc.vscode-tailwindcss
 twxs.cmake
 mquandalle.graphql
 
-# python
+# Python
 ms-python.python
 ms-python.vscode-pylance
 ms-python.black-formatter
 ms-python.debugpy
 ms-python.vscode-python-envs
 
-# jupyter
+# Jupyter
 ms-toolsai.jupyter
 ms-toolsai.jupyter-keymap
 ms-toolsai.jupyter-renderers
 ms-toolsai.vscode-jupyter-cell-tags
 ms-toolsai.vscode-jupyter-slideshow
 
-# c/c++
+# C/C++
 ms-vscode.cmake-tools
 ms-vscode.cpptools
 ms-vscode.cpptools-extension-pack
 ms-vscode.cpptools-themes
+ms-vscode.makefile-tools
 
-# docker & containers
+# .NET / C#
+ms-dotnettools.csdevkit
+ms-dotnettools.csharp
+ms-dotnettools.dotnet-interactive-vscode
+ms-dotnettools.vscode-dotnet-runtime
+icsharpcode.ilspy-vscode
+tintoy.msbuild-project-tools
+
+# Containers
 ms-azuretools.vscode-containers
-ms-azuretools.vscode-docker
 
-# utilities
+# Vue
+vue.volar
+
+# Utilities
+humao.rest-client
+qwtel.sqlite-viewer
 asciidoctor.asciidoctor-vscode
 austenc.tailwind-docs
 ciantic.keymapceditor-vsc

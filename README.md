@@ -6,9 +6,10 @@ Personal configuration files for development environments across multiple machin
 
 This repository contains my dotfiles for maintaining consistent development environments across different machines. It includes configurations for:
 
-- Shell (Zsh)
+- Shell (Zsh with Oh My Zsh)
 - Git
 - VSCode
+- Micro editor
 - Windows Terminal
 
 ## Structure
@@ -16,7 +17,7 @@ This repository contains my dotfiles for maintaining consistent development envi
 ```text
 dotfiles/
 ├── shell/              # Shell configuration files
-│   └── .zshrc          # Zsh configuration
+│   └── .zshrc          # Zsh configuration (Oh My Zsh)
 ├── git/                # Git configuration
 │   ├── .gitconfig      # Git config with aliases
 │   └── .gitignore_global  # Global gitignore
@@ -28,9 +29,11 @@ dotfiles/
 │       ├── catppuccin/       # Catppuccin theme
 │       ├── catppuccin-icons/ # Catppuccin icons
 │       └── sublime-monokai/  # Sublime Monokai theme
+├── micro/              # Micro editor config
+│   ├── settings.json   # Editor settings
+│   └── bindings.json   # Key bindings
 ├── windows-terminal/   # Windows Terminal config
 │   └── settings.json   # Terminal settings
-├── scripts/            # Utility scripts
 └── install.sh          # Installation script
 ```
 
@@ -64,6 +67,11 @@ ln -s ~/.dotfiles/shell/.zshrc ~/.zshrc
 ln -s ~/.dotfiles/git/.gitconfig ~/.gitconfig
 ln -s ~/.dotfiles/git/.gitignore_global ~/.gitignore_global
 
+# Micro editor
+mkdir -p ~/.config/micro
+ln -s ~/.dotfiles/micro/settings.json ~/.config/micro/settings.json
+ln -s ~/.dotfiles/micro/bindings.json ~/.config/micro/bindings.json
+
 # VSCode (location varies by OS)
 # Linux: ~/.config/Code/User/
 # macOS: ~/Library/Application Support/Code/User/
@@ -83,20 +91,25 @@ git config --global user.email "your.email@example.com"
 
 ### Zsh
 
-The Zsh configuration includes:
+The Zsh configuration uses Oh My Zsh with the agnoster theme. Features include:
 
-- Sensible defaults for history
-- Useful aliases for navigation and git
-- Helper functions (mkcd, extract)
-- Oh My Zsh compatibility (commented out by default)
+- Oh My Zsh with agnoster theme
+- NVM (Node Version Manager) integration
+- Homebrew (Linuxbrew) integration
+- Alias for micro editor (`m`)
+- Support for machine-specific config via `.zshrc.local`
 
-To enable Oh My Zsh, install it first:
+**Prerequisites:** Install Oh My Zsh first:
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-Then uncomment the Oh My Zsh sections in [shell/.zshrc](shell/.zshrc).
+### Micro Editor
+
+The [micro](https://micro-editor.github.io/) configuration includes:
+
+- Custom key bindings for commenting (`Alt-/` and `Ctrl+_`)
 
 ### VSCode
 
@@ -164,10 +177,7 @@ This file is sourced by the main `.zshrc` and is ignored by git.
 
 ### Shell Aliases (from .zshrc)
 
-- `ll` - Detailed list with hidden files
-- `..` - Go up one directory
-- `gs` - Git status
-- `mkcd` - Create and enter directory
+- `m` - Micro editor
 
 ## Updating
 
