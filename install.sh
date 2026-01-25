@@ -16,6 +16,35 @@ NC='\033[0m' # No Color
 # Get the directory where this script is located
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# Default to symlinks, use --copy for copying files instead
+USE_COPY=false
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --copy)
+            USE_COPY=true
+            shift
+            ;;
+        -h|--help)
+            echo "Usage: ./install.sh [OPTIONS]"
+            echo ""
+            echo "Options:"
+            echo "  --copy    Copy files instead of creating symlinks"
+            echo "  -h, --help    Show this help message"
+            echo ""
+            echo "By default, symlinks are created so changes in the repo"
+            echo "are immediately reflected. Use --copy for standalone configs."
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
+    esac
+done
+
 # ============================================================================
 # Helper Functions
 # ============================================================================
@@ -45,6 +74,10 @@ backup_file() {
     fi
 }
 
+is_wsl() {
+    grep -qi microsoft /proc/version 2>/dev/null
+}
+
 create_symlink() {
     local source=$1
     local target=$2
@@ -60,6 +93,32 @@ create_symlink() {
     print_success "Linked $target -> $source"
 }
 
+copy_file() {
+    local source=$1
+    local target=$2
+
+    # Create parent directory if it doesn't exist
+    mkdir -p "$(dirname "$target")"
+
+    # Backup existing file
+    backup_file "$target"
+
+    # Copy file
+    cp "$source" "$target"
+    print_success "Copied $source -> $target"
+}
+
+install_file() {
+    local source=$1
+    local target=$2
+
+    if [ "$USE_COPY" = true ]; then
+        copy_file "$source" "$target"
+    else
+        create_symlink "$source" "$target"
+    fi
+}
+
 # ============================================================================
 # Installation Functions
 # ============================================================================
@@ -68,11 +127,11 @@ install_shell_config() {
     print_header "Installing Shell Configuration"
 
     if [ -f "$DOTFILES_DIR/shell/.zshrc" ]; then
-        create_symlink "$DOTFILES_DIR/shell/.zshrc" "$HOME/.zshrc"
+        install_file "$DOTFILES_DIR/shell/.zshrc" "$HOME/.zshrc"
     fi
 
     if [ -f "$DOTFILES_DIR/shell/.bashrc" ]; then
-        create_symlink "$DOTFILES_DIR/shell/.bashrc" "$HOME/.bashrc"
+        install_file "$DOTFILES_DIR/shell/.bashrc" "$HOME/.bashrc"
     fi
 }
 
@@ -80,11 +139,11 @@ install_git_config() {
     print_header "Installing Git Configuration"
 
     if [ -f "$DOTFILES_DIR/git/.gitconfig" ]; then
-        create_symlink "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
+        install_file "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
     fi
 
     if [ -f "$DOTFILES_DIR/git/.gitignore_global" ]; then
-        create_symlink "$DOTFILES_DIR/git/.gitignore_global" "$HOME/.gitignore_global"
+        install_file "$DOTFILES_DIR/git/.gitignore_global" "$HOME/.gitignore_global"
     fi
 
     print_warning "Don't forget to update your Git user.name and user.email in ~/.gitconfig"
@@ -98,16 +157,26 @@ install_vscode_config() {
         VSCODE_DIR="$HOME/Library/Application Support/Code/User"
     elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
         VSCODE_DIR="$APPDATA/Code/User"
+    elif is_wsl; then
+        # WSL: Use Windows VSCode settings path
+        WIN_USER=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r')
+        if [ -n "$WIN_USER" ]; then
+            VSCODE_DIR="/mnt/c/Users/$WIN_USER/AppData/Roaming/Code/User"
+            print_success "Detected WSL, using Windows VSCode path for user: $WIN_USER"
+        else
+            VSCODE_DIR="$HOME/.config/Code/User"
+            print_warning "Could not detect Windows username, using Linux VSCode path"
+        fi
     else
         VSCODE_DIR="$HOME/.config/Code/User"
     fi
 
     if [ -f "$DOTFILES_DIR/vscode/settings.json" ]; then
-        create_symlink "$DOTFILES_DIR/vscode/settings.json" "$VSCODE_DIR/settings.json"
+        install_file "$DOTFILES_DIR/vscode/settings.json" "$VSCODE_DIR/settings.json"
     fi
 
     if [ -f "$DOTFILES_DIR/vscode/keybindings.json" ]; then
-        create_symlink "$DOTFILES_DIR/vscode/keybindings.json" "$VSCODE_DIR/keybindings.json"
+        install_file "$DOTFILES_DIR/vscode/keybindings.json" "$VSCODE_DIR/keybindings.json"
     fi
 
     # Install extensions
@@ -158,7 +227,7 @@ install_terminal_config() {
     if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
         WT_DIR="$LOCALAPPDATA/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState"
         if [ -d "$WT_DIR" ] && [ -f "$DOTFILES_DIR/windows-terminal/settings.json" ]; then
-            create_symlink "$DOTFILES_DIR/windows-terminal/settings.json" "$WT_DIR/settings.json"
+            install_file "$DOTFILES_DIR/windows-terminal/settings.json" "$WT_DIR/settings.json"
         fi
     fi
 }
@@ -170,11 +239,11 @@ install_micro_config() {
     mkdir -p "$MICRO_DIR"
 
     if [ -f "$DOTFILES_DIR/micro/settings.json" ]; then
-        create_symlink "$DOTFILES_DIR/micro/settings.json" "$MICRO_DIR/settings.json"
+        install_file "$DOTFILES_DIR/micro/settings.json" "$MICRO_DIR/settings.json"
     fi
 
     if [ -f "$DOTFILES_DIR/micro/bindings.json" ]; then
-        create_symlink "$DOTFILES_DIR/micro/bindings.json" "$MICRO_DIR/bindings.json"
+        install_file "$DOTFILES_DIR/micro/bindings.json" "$MICRO_DIR/bindings.json"
     fi
 }
 
@@ -185,6 +254,11 @@ install_micro_config() {
 main() {
     print_header "Starting Dotfiles Installation"
     echo "Dotfiles directory: $DOTFILES_DIR"
+    if [ "$USE_COPY" = true ]; then
+        echo -e "Mode: ${YELLOW}copy${NC} (standalone files)"
+    else
+        echo -e "Mode: ${GREEN}symlink${NC} (linked to repo)"
+    fi
 
     # Prompt for what to install
     echo -e "\nWhat would you like to install?"
