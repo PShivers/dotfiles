@@ -18,6 +18,8 @@ DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Default to symlinks, use --copy for copying files instead
 USE_COPY=false
+CHECK_MODE=false
+MANIFEST_FILE="$HOME/.dotfiles-manifest"
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -26,15 +28,23 @@ while [[ $# -gt 0 ]]; do
             USE_COPY=true
             shift
             ;;
+        --check)
+            CHECK_MODE=true
+            shift
+            ;;
         -h|--help)
             echo "Usage: ./install.sh [OPTIONS]"
             echo ""
             echo "Options:"
-            echo "  --copy    Copy files instead of creating symlinks"
-            echo "  -h, --help    Show this help message"
+            echo "  --copy      Copy files instead of creating symlinks"
+            echo "  --check     Check if installed files are up to date with repo"
+            echo "  -h, --help  Show this help message"
             echo ""
             echo "By default, symlinks are created so changes in the repo"
             echo "are immediately reflected. Use --copy for standalone configs."
+            echo ""
+            echo "When using --copy, a manifest is saved to ~/.dotfiles-manifest"
+            echo "Use --check to see which files need updating."
             exit 0
             ;;
         *)
@@ -78,6 +88,81 @@ is_wsl() {
     grep -qi microsoft /proc/version 2>/dev/null
 }
 
+get_file_hash() {
+    local file=$1
+    if [ -f "$file" ]; then
+        sha256sum "$file" 2>/dev/null | cut -d' ' -f1
+    else
+        echo ""
+    fi
+}
+
+record_to_manifest() {
+    local source=$1
+    local target=$2
+    local hash=$(get_file_hash "$source")
+    local timestamp=$(date -Iseconds)
+
+    # Remove existing entry for this target
+    if [ -f "$MANIFEST_FILE" ]; then
+        grep -v "^$target|" "$MANIFEST_FILE" > "$MANIFEST_FILE.tmp" 2>/dev/null || true
+        mv "$MANIFEST_FILE.tmp" "$MANIFEST_FILE"
+    fi
+
+    # Add new entry: target|source|hash|timestamp
+    echo "$target|$source|$hash|$timestamp" >> "$MANIFEST_FILE"
+}
+
+check_status() {
+    print_header "Checking Dotfiles Status"
+
+    if [ ! -f "$MANIFEST_FILE" ]; then
+        print_warning "No manifest file found at $MANIFEST_FILE"
+        echo "Run ./install.sh --copy first to create a manifest."
+        exit 0
+    fi
+
+    local outdated=0
+    local up_to_date=0
+    local missing=0
+
+    while IFS='|' read -r target source hash timestamp; do
+        if [ ! -f "$target" ]; then
+            print_error "Missing: $target"
+            ((missing++))
+        else
+            local current_repo_hash=$(get_file_hash "$source")
+            local current_target_hash=$(get_file_hash "$target")
+
+            if [ "$current_repo_hash" != "$hash" ]; then
+                # Repo has been updated since install
+                if [ "$current_target_hash" = "$hash" ]; then
+                    print_warning "Outdated: $target (repo updated)"
+                    echo "         Installed: ${timestamp}"
+                    ((outdated++))
+                else
+                    print_warning "Modified: $target (local changes + repo updated)"
+                    ((outdated++))
+                fi
+            elif [ "$current_target_hash" != "$hash" ]; then
+                print_warning "Modified: $target (local changes only)"
+                ((outdated++))
+            else
+                print_success "Up to date: $target"
+                ((up_to_date++))
+            fi
+        fi
+    done < "$MANIFEST_FILE"
+
+    echo ""
+    echo "Summary: $up_to_date up to date, $outdated need attention, $missing missing"
+
+    if [ $outdated -gt 0 ] || [ $missing -gt 0 ]; then
+        echo ""
+        echo "Run ./install.sh --copy to update outdated files."
+    fi
+}
+
 create_symlink() {
     local source=$1
     local target=$2
@@ -106,6 +191,9 @@ copy_file() {
     # Copy file
     cp "$source" "$target"
     print_success "Copied $source -> $target"
+
+    # Record to manifest for version tracking
+    record_to_manifest "$source" "$target"
 }
 
 install_file() {
@@ -252,6 +340,12 @@ install_micro_config() {
 # ============================================================================
 
 main() {
+    # Handle --check mode
+    if [ "$CHECK_MODE" = true ]; then
+        check_status
+        exit 0
+    fi
+
     print_header "Starting Dotfiles Installation"
     echo "Dotfiles directory: $DOTFILES_DIR"
     if [ "$USE_COPY" = true ]; then
