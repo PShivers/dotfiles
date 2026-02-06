@@ -70,7 +70,7 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
-plugins=(git)
+plugins=(git you-should-use docker docker-compose node npm python zsh-autosuggestions zsh-interactive-cd zsh-navigation-tools zsh-bat zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
