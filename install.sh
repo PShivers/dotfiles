@@ -61,6 +61,99 @@ create_symlink() {
 }
 
 # ============================================================================
+# Dependency Installation (Linux)
+# ============================================================================
+
+install_dependencies() {
+    print_header "Checking Dependencies"
+
+    # Check for apt (Debian/Ubuntu)
+    if ! command -v apt &> /dev/null; then
+        print_warning "apt not found — dependency installation is only supported on Debian/Ubuntu"
+        return
+    fi
+
+    # curl
+    if ! command -v curl &> /dev/null; then
+        read -p "curl is not installed. Install it? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            sudo apt install -y curl
+            print_success "curl installed"
+        fi
+    else
+        print_success "curl is already installed"
+    fi
+
+    # git
+    if ! command -v git &> /dev/null; then
+        read -p "git is not installed. Install it? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            sudo apt install -y git
+            print_success "git installed"
+        fi
+    else
+        print_success "git is already installed"
+    fi
+
+    # zsh
+    if ! command -v zsh &> /dev/null; then
+        read -p "zsh is not installed. Install it? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            sudo apt install -y zsh
+            print_success "zsh installed"
+        fi
+    else
+        print_success "zsh is already installed"
+    fi
+
+    # micro text editor
+    if ! command -v micro &> /dev/null; then
+        read -p "micro text editor is not installed. Install it? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            sudo apt install -y micro
+            print_success "micro installed"
+        fi
+    else
+        print_success "micro is already installed"
+    fi
+
+    # Oh My Zsh
+    if [ ! -d "$HOME/.oh-my-zsh" ]; then
+        read -p "Oh My Zsh is not installed. Install it? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            if command -v curl &> /dev/null; then
+                sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+                print_success "Oh My Zsh installed"
+            else
+                print_error "curl is required to install Oh My Zsh"
+            fi
+        fi
+    else
+        print_success "Oh My Zsh is already installed"
+    fi
+
+    # Set zsh as default shell
+    if command -v zsh &> /dev/null; then
+        current_shell=$(basename "$SHELL")
+        if [ "$current_shell" != "zsh" ]; then
+            read -p "Set zsh as your default shell? [y/N]: " -n 1 -r
+            echo
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                chsh -s "$(which zsh)"
+                print_success "Default shell set to zsh"
+            fi
+        else
+            print_success "zsh is already the default shell"
+        fi
+    fi
+}
+
+# ============================================================================
 # Installation Functions
 # ============================================================================
 
@@ -154,6 +247,12 @@ install_vscode_config() {
 install_terminal_config() {
     print_header "Installing Terminal Configuration"
 
+    # Terminal config is Windows-only
+    if [[ "$OSTYPE" != "msys" ]] && [[ "$OSTYPE" != "win32" ]]; then
+        print_warning "Terminal config is Windows-only, skipping."
+        return
+    fi
+
     # Windows Terminal
     if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
         WT_DIR="$LOCALAPPDATA/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState"
@@ -170,6 +269,15 @@ install_terminal_config() {
 main() {
     print_header "Starting Dotfiles Installation"
     echo "Dotfiles directory: $DOTFILES_DIR"
+
+    # On Linux, offer to install prerequisites
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        read -p "Check and install prerequisites (zsh, git, curl, Oh My Zsh)? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            install_dependencies
+        fi
+    fi
 
     # Prompt for what to install
     echo -e "\nWhat would you like to install?"
@@ -202,19 +310,19 @@ main() {
             install_terminal_config
             ;;
         6)
-            read -p "Install shell config? [y/N]: " -n 1 -r shell
+            read -p "Install shell config? [y/N]: " -n 1 -r install_shell
             echo
-            read -p "Install git config? [y/N]: " -n 1 -r git
+            read -p "Install git config? [y/N]: " -n 1 -r install_git
             echo
-            read -p "Install VSCode config? [y/N]: " -n 1 -r vscode
+            read -p "Install VSCode config? [y/N]: " -n 1 -r install_vscode
             echo
-            read -p "Install terminal config? [y/N]: " -n 1 -r terminal
+            read -p "Install terminal config? [y/N]: " -n 1 -r install_terminal
             echo
 
-            [[ $shell =~ ^[Yy]$ ]] && install_shell_config
-            [[ $git =~ ^[Yy]$ ]] && install_git_config
-            [[ $vscode =~ ^[Yy]$ ]] && install_vscode_config
-            [[ $terminal =~ ^[Yy]$ ]] && install_terminal_config
+            [[ $install_shell =~ ^[Yy]$ ]] && install_shell_config
+            [[ $install_git =~ ^[Yy]$ ]] && install_git_config
+            [[ $install_vscode =~ ^[Yy]$ ]] && install_vscode_config
+            [[ $install_terminal =~ ^[Yy]$ ]] && install_terminal_config
             ;;
         *)
             print_error "Invalid choice"

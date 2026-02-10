@@ -2,8 +2,7 @@
 # Zsh Configuration
 # ============================================================================
 
-# Path to your oh-my-zsh installation (if using)
-# export ZSH="$HOME/.oh-my-zsh"
+# Path to your oh-my-zsh installation (configured automatically below)
 
 # ============================================================================
 # Theme & Appearance
@@ -72,13 +71,16 @@ alias py='python'
 alias pip='python -m pip'
 alias venv='python -m venv'
 
+# Editor
+alias edit='micro'
+
 # ============================================================================
 # Environment Variables
 # ============================================================================
 
 # Default editor
-export EDITOR='vim'
-export VISUAL='vim'
+export EDITOR='micro'
+export VISUAL='micro'
 
 # Add local bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
@@ -122,8 +124,11 @@ extract() {
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 # ============================================================================
-# Oh My Zsh (Uncomment if using)
+# Oh My Zsh
 # ============================================================================
 
-plugins=(git docker kubectl node npm python)
-source $ZSH/oh-my-zsh.sh
+if [ -d "$HOME/.oh-my-zsh" ]; then
+    export ZSH="$HOME/.oh-my-zsh"
+    plugins=(git docker kubectl node npm python zsh-autosuggestions zsh-syntax-highlighting)
+    source $ZSH/oh-my-zsh.sh
+fi
