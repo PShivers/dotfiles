@@ -273,10 +273,21 @@ install_vscode_config() {
 install_terminal_config() {
     print_header "Installing Terminal Configuration"
 
-    # Terminal config is Windows-only
-    if [[ "$OSTYPE" != "msys" ]] && [[ "$OSTYPE" != "win32" ]]; then
-        print_warning "Terminal config is Windows-only, skipping."
-        return
+    # GNOME Terminal (Linux)
+    if [[ "$OSTYPE" == "linux-gnu"* ]] && command -v dconf &> /dev/null; then
+        if [ -f "$DOTFILES_DIR/gnome-terminal/rose-pine.dconf" ]; then
+            PROFILE_ID=$(dconf read /org/gnome/terminal/legacy/profiles:/default 2>/dev/null | tr -d "'")
+            if [ -z "$PROFILE_ID" ]; then
+                PROFILE_ID=$(dconf list /org/gnome/terminal/legacy/profiles:/ 2>/dev/null | head -1 | tr -d '/:')
+            fi
+
+            if [ -n "$PROFILE_ID" ]; then
+                dconf load "/org/gnome/terminal/legacy/profiles:/:$PROFILE_ID/" < "$DOTFILES_DIR/gnome-terminal/rose-pine.dconf"
+                print_success "GNOME Terminal Rose Pine theme applied"
+            else
+                print_warning "No GNOME Terminal profile found, skipping"
+            fi
+        fi
     fi
 
     # Windows Terminal
