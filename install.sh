@@ -137,6 +137,23 @@ install_dependencies() {
         print_success "Oh My Zsh is already installed"
     fi
 
+    # MesloLGS NF font (required for Agnoster theme)
+    if ! fc-list | grep -qi "MesloLGS NF"; then
+        read -p "MesloLGS NF font is not installed (needed for Agnoster). Install it? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            mkdir -p "$HOME/.local/share/fonts"
+            curl -fLo "$HOME/.local/share/fonts/MesloLGS NF Regular.ttf" "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf"
+            curl -fLo "$HOME/.local/share/fonts/MesloLGS NF Bold.ttf" "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf"
+            curl -fLo "$HOME/.local/share/fonts/MesloLGS NF Italic.ttf" "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf"
+            curl -fLo "$HOME/.local/share/fonts/MesloLGS NF Bold Italic.ttf" "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf"
+            fc-cache -f
+            print_success "MesloLGS NF font installed"
+        fi
+    else
+        print_success "MesloLGS NF font is already installed"
+    fi
+
     # Oh My Zsh custom plugins
     if [ -d "$HOME/.oh-my-zsh" ]; then
         ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"

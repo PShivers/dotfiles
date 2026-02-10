@@ -8,8 +8,7 @@
 # Theme & Appearance
 # ============================================================================
 
-ZSH_THEME="agnoster" 
-DEFAULT_USER="pshivers"
+ZSH_THEME="agnoster"
 
 # Enable colors
 autoload -U colors && colors
@@ -116,6 +115,9 @@ if [ -d "$HOME/.oh-my-zsh" ]; then
     export ZSH="$HOME/.oh-my-zsh"
     plugins=(git docker kubectl node npm python zsh-autosuggestions zsh-syntax-highlighting you-should-use)
     source $ZSH/oh-my-zsh.sh
-fi
 
-PROMPT='%~ %# '
+    # Show username only (no hostname) in prompt
+    prompt_context() {
+        prompt_segment "$AGNOSTER_CONTEXT_BG" "$AGNOSTER_CONTEXT_FG" "%n"
+    }
+fi

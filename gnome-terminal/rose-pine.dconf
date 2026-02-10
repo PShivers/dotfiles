@@ -7,5 +7,7 @@ cursor-colors-set=true
 cursor-foreground-color='#191724'
 foreground-color='#e0def4'
 palette=['#26233a', '#eb6f92', '#31748f', '#f6c177', '#9ccfd8', '#c4a7e7', '#ebbcba', '#e0def4', '#6e6a86', '#eb6f92', '#31748f', '#f6c177', '#9ccfd8', '#c4a7e7', '#ebbcba', '#e0def4']
+font='MesloLGS NF 12'
+use-system-font=false
 use-theme-colors=false
 visible-name='Rose Pine'
