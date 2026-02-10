@@ -6,9 +6,10 @@ Personal configuration files for development environments across multiple machin
 
 This repository contains my dotfiles for maintaining consistent development environments across different machines. It includes configurations for:
 
-- Shell (Zsh)
+- Shell (Zsh with Oh My Zsh + Agnoster theme)
 - Git
 - VSCode
+- GNOME Terminal (Rose Pine theme)
 - Windows Terminal
 
 ## Structure
@@ -20,6 +21,8 @@ dotfiles/
 ├── git/                # Git configuration
 │   ├── .gitconfig      # Git config with aliases
 │   └── .gitignore_global  # Global gitignore
+├── gnome-terminal/     # GNOME Terminal configuration
+│   └── rose-pine.dconf # Rose Pine color scheme
 ├── vscode/             # VSCode settings
 │   ├── settings.json   # Editor settings
 │   ├── keybindings.json  # Keyboard shortcuts
@@ -30,8 +33,8 @@ dotfiles/
 │       └── sublime-monokai/  # Sublime Monokai theme
 ├── windows-terminal/   # Windows Terminal config
 │   └── settings.json   # Terminal settings
-├── scripts/            # Utility scripts
-└── install.sh          # Installation script
+├── install.sh          # Installation script
+└── uninstall.sh        # Uninstallation script
 ```
 
 ## Installation
@@ -48,9 +51,14 @@ cd ~/.dotfiles
 
 The install script will:
 
+- Check and install prerequisites (zsh, git, curl, micro, Oh My Zsh)
+- Install MesloLGS NF font (required for Agnoster theme)
+- Clone Oh My Zsh custom plugins (zsh-autosuggestions, zsh-syntax-highlighting, you-should-use)
+- Set zsh as the default shell
 - Backup any existing config files
 - Create symlinks to the dotfiles
-- Optionally install VSCode extensions
+- Apply Rose Pine theme to GNOME Terminal (Linux)
+- Optionally install VSCode extensions and themes
 
 ### Manual Installation
 
@@ -83,20 +91,37 @@ git config --global user.email "your.email@example.com"
 
 ### Zsh
 
-The Zsh configuration includes:
+The Zsh configuration uses Oh My Zsh with the **Agnoster** theme and includes:
 
+- Agnoster prompt showing username and directory with Powerline segments
+- **MesloLGS NF** font (installed automatically for Powerline glyphs)
 - Sensible defaults for history
-- Useful aliases for navigation and git
-- Helper functions (mkcd, extract)
-- Oh My Zsh compatibility (commented out by default)
+- Case-insensitive tab completion
+- Helper functions (`mkcd`, `extract`)
+- Platform-specific overrides via `~/.zshrc.local`
 
-To enable Oh My Zsh, install it first:
+#### Oh My Zsh Plugins
+
+- **git** - Git aliases and functions
+- **docker** - Docker completions
+- **kubectl** - Kubernetes completions
+- **node** - Node.js helpers
+- **npm** - npm completions
+- **python** - Python helpers
+- **zsh-autosuggestions** - Fish-like autosuggestions
+- **zsh-syntax-highlighting** - Syntax highlighting in the shell
+- **you-should-use** - Reminds you to use existing aliases
+
+### GNOME Terminal
+
+The GNOME Terminal configuration applies the **Rose Pine** color scheme via a dconf file. It is automatically loaded by the install script on Linux systems with GNOME Terminal.
+
+To manually apply:
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+PROFILE_ID=$(dconf list /org/gnome/terminal/legacy/profiles:/ | head -1 | tr -d '/:')
+dconf load "/org/gnome/terminal/legacy/profiles:/:$PROFILE_ID/" < gnome-terminal/rose-pine.dconf
 ```
-
-Then uncomment the Oh My Zsh sections in [shell/.zshrc](shell/.zshrc).
 
 ### VSCode
 
@@ -116,13 +141,7 @@ The [vscode/themes/](vscode/themes/) directory contains custom theme files. Curr
 - **Catppuccin Icons** - Matching icon theme
 - **Sublime Monokai** - A faithful recreation of Sublime Text's Monokai theme
 
-The install script automatically copies custom themes to your VSCode extensions directory. To manually install a theme:
-
-```bash
-cp -r vscode/themes/catppuccin ~/.vscode/extensions/
-cp -r vscode/themes/catppuccin-icons ~/.vscode/extensions/
-cp -r vscode/themes/sublime-monokai ~/.vscode/extensions/
-```
+The install script automatically copies custom themes to your VSCode extensions directory.
 
 ### Windows Terminal
 
@@ -131,6 +150,32 @@ Windows Terminal settings are automatically detected on Windows. The configurati
 - Custom color scheme (One Half Dark)
 - Font settings (Cascadia Code)
 - Profile configurations for PowerShell, WSL, and Git Bash
+
+## Shell Aliases
+
+### Git Aliases (from .gitconfig)
+
+- `git st` - Short status
+- `git l` - One-line log with graph
+- `git co` - Checkout
+- `git cob` - Create and checkout new branch
+- `git cm` - Commit with message
+- `git unstage` - Unstage files
+- `git undo` - Undo last commit (soft reset)
+
+### Shell Aliases (from .zshrc)
+
+- `..` - Go up one directory
+- `py` - Python
+- `pip` - Python pip
+- `venv` - Create a Python venv
+- `edit` / `m` - Open micro editor
+- `rm`, `cp`, `mv` - Safety aliases with `-i` confirmation
+
+### Functions
+
+- `mkcd <dir>` - Create and enter directory
+- `extract <file>` - Extract any common archive format
 
 ## Customization
 
@@ -150,24 +195,13 @@ This file is sourced by the main `.zshrc` and is ignored by git.
 2. Update [install.sh](install.sh) to symlink the new config
 3. Document it in this README
 
-## Useful Aliases
+## Uninstalling
 
-### Git Aliases (from .gitconfig)
+To remove dotfile symlinks and restore backups:
 
-- `git st` - Short status
-- `git l` - One-line log with graph
-- `git co` - Checkout
-- `git cob` - Create and checkout new branch
-- `git cm` - Commit with message
-- `git unstage` - Unstage files
-- `git undo` - Undo last commit (soft reset)
-
-### Shell Aliases (from .zshrc)
-
-- `ll` - Detailed list with hidden files
-- `..` - Go up one directory
-- `gs` - Git status
-- `mkcd` - Create and enter directory
+```bash
+./uninstall.sh
+```
 
 ## Updating
 
