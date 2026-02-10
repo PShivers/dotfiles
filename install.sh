@@ -137,6 +137,32 @@ install_dependencies() {
         print_success "Oh My Zsh is already installed"
     fi
 
+    # Oh My Zsh custom plugins
+    if [ -d "$HOME/.oh-my-zsh" ]; then
+        ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+
+        if [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]; then
+            git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+            print_success "zsh-autosuggestions plugin installed"
+        else
+            print_success "zsh-autosuggestions plugin already installed"
+        fi
+
+        if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
+            git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+            print_success "zsh-syntax-highlighting plugin installed"
+        else
+            print_success "zsh-syntax-highlighting plugin already installed"
+        fi
+
+        if [ ! -d "$ZSH_CUSTOM/plugins/you-should-use" ]; then
+            git clone https://github.com/MichaelAqworter-Ly/zsh-you-should-use.git "$ZSH_CUSTOM/plugins/you-should-use"
+            print_success "you-should-use plugin installed"
+        else
+            print_success "you-should-use plugin already installed"
+        fi
+    fi
+
     # Set zsh as default shell
     if command -v zsh &> /dev/null; then
         current_shell=$(basename "$SHELL")

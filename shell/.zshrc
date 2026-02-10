@@ -8,7 +8,7 @@
 # Theme & Appearance
 # ============================================================================
 
-# ZSH_THEME="robbyrussell"  # Uncomment if using oh-my-zsh
+ZSH_THEME="agnoster" 
 
 # Enable colors
 autoload -U colors && colors
@@ -41,25 +41,8 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # Navigation
 alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
 
-# List files
-alias ll='ls -lah'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Git shortcuts
-alias g='git'
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
-alias gl='git pull'
-alias gd='git diff'
-alias gco='git checkout'
-alias gb='git branch'
-alias glog='git log --oneline --graph --decorate'
+# Git shortcuts (most provided by oh-my-zsh git plugin)
 
 # Safety
 alias rm='rm -i'
@@ -73,6 +56,7 @@ alias venv='python -m venv'
 
 # Editor
 alias edit='micro'
+alias m='micro'
 
 # ============================================================================
 # Environment Variables
@@ -129,6 +113,6 @@ extract() {
 
 if [ -d "$HOME/.oh-my-zsh" ]; then
     export ZSH="$HOME/.oh-my-zsh"
-    plugins=(git docker kubectl node npm python zsh-autosuggestions zsh-syntax-highlighting)
+    plugins=(git docker kubectl node npm python zsh-autosuggestions zsh-syntax-highlighting you-should-use)
     source $ZSH/oh-my-zsh.sh
 fi
