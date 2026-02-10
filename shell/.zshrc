@@ -9,6 +9,7 @@
 # ============================================================================
 
 ZSH_THEME="agnoster" 
+DEFAULT_USER="pshivers"
 
 # Enable colors
 autoload -U colors && colors
@@ -116,3 +117,5 @@ if [ -d "$HOME/.oh-my-zsh" ]; then
     plugins=(git docker kubectl node npm python zsh-autosuggestions zsh-syntax-highlighting you-should-use)
     source $ZSH/oh-my-zsh.sh
 fi
+
+PROMPT='%~ %# '

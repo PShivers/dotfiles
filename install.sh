@@ -156,7 +156,7 @@ install_dependencies() {
         fi
 
         if [ ! -d "$ZSH_CUSTOM/plugins/you-should-use" ]; then
-            git clone https://github.com/MichaelAqworter-Ly/zsh-you-should-use.git "$ZSH_CUSTOM/plugins/you-should-use"
+            git clone https://github.com/MichaelAquilina/zsh-you-should-use.git "$ZSH_CUSTOM/plugins/you-should-use"
             print_success "you-should-use plugin installed"
         else
             print_success "you-should-use plugin already installed"
