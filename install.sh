@@ -200,11 +200,46 @@ install_dependencies() {
 # Installation Functions
 # ============================================================================
 
+install_powerlevel10k() {
+    print_header "Installing Powerlevel10k Theme"
+    ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+    P10K_DIR="$ZSH_CUSTOM/themes/powerlevel10k"
+
+    if [ ! -d "$P10K_DIR" ]; then
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
+        print_success "Powerlevel10k theme installed"
+    else
+        print_success "Powerlevel10k theme already installed"
+    fi
+}
+
 install_shell_config() {
     print_header "Installing Shell Configuration"
 
-    if [ -f "$DOTFILES_DIR/shell/.zshrc" ]; then
-        create_symlink "$DOTFILES_DIR/shell/.zshrc" "$HOME/.zshrc"
+    echo "Select a zsh theme:"
+    echo "1) agnoster (classic, needs powerline font)"
+    echo "2) powerlevel10k (fast and flexible, recommended)"
+    read -p "Enter your choice [1-2]: " theme_choice
+
+    local zshrc_file=""
+    case $theme_choice in
+        1)
+            zshrc_file="shell/.zshrc-agnoster"
+            ;;
+        2)
+            zshrc_file="shell/.zshrc-p10k"
+            install_powerlevel10k
+            ;;
+        *)
+            print_error "Invalid choice, skipping .zshrc installation"
+            return
+            ;;
+    esac
+
+    if [ -f "$DOTFILES_DIR/$zshrc_file" ]; then
+        create_symlink "$DOTFILES_DIR/$zshrc_file" "$HOME/.zshrc"
+    else
+        print_error "Could not find $zshrc_file"
     fi
 
     if [ -f "$DOTFILES_DIR/shell/.bashrc" ]; then
@@ -289,6 +324,28 @@ install_vscode_config() {
 
 install_terminal_config() {
     print_header "Installing Terminal Configuration"
+
+    # Check for WSL
+    IS_WSL=false
+    if grep -q -i "microsoft" /proc/version 2>/dev/null || grep -q -i "wsl" /proc/version 2>/dev/null; then
+        IS_WSL=true
+    fi
+
+    if [ "$IS_WSL" = true ]; then
+        print_warning "WSL detected. Automatic terminal configuration is not possible from within WSL."
+        echo -e "${YELLOW}Please perform the following steps manually on your Windows host machine:${NC}"
+        echo "  1. Download and install the MesloLGS NF font."
+        echo "     Direct links:"
+        echo "     - Regular: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf"
+        echo "     - Bold: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf"
+        echo "     - Italic: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf"
+        echo "     - Bold Italic: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf"
+        echo "  2. After installing the fonts, open Windows Terminal and go to Settings (Ctrl+,)."
+        echo "  3. Select your Linux profile (e.g., Ubuntu)."
+        echo "  4. Go to the 'Appearance' tab and set the 'Font face' to 'MesloLGS NF'."
+        echo "  5. You can also refer to the 'windows-terminal/settings.json' file in this repository for other theme settings."
+        return
+    fi
 
     # GNOME Terminal (Linux)
     if [[ "$OSTYPE" == "linux-gnu"* ]] && command -v dconf &> /dev/null; then
