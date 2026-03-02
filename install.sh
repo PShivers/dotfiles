@@ -13,6 +13,10 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# State tracking
+SHELL_CHANGED=false
+SELECTED_THEME=""
+
 # Get the directory where this script is located
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -109,6 +113,18 @@ install_dependencies() {
         print_success "zsh is already installed"
     fi
 
+    # VS Code
+    if ! command -v code &> /dev/null; then
+        read -p "VS Code is not installed. Install it? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            sudo snap install --classic code
+            print_success "VS Code installed"
+        fi
+    else
+        print_success "VS Code is already installed"
+    fi
+
     # micro text editor
     if ! command -v micro &> /dev/null; then
         read -p "micro text editor is not installed. Install it? [y/N]: " -n 1 -r
@@ -188,6 +204,7 @@ install_dependencies() {
             echo
             if [[ $REPLY =~ ^[Yy]$ ]]; then
                 chsh -s "$(which zsh)"
+                SHELL_CHANGED=true
                 print_success "Default shell set to zsh"
             fi
         else
@@ -225,9 +242,11 @@ install_shell_config() {
     case $theme_choice in
         1)
             zshrc_file="shell/.zshrc-agnoster"
+            SELECTED_THEME="agnoster"
             ;;
         2)
             zshrc_file="shell/.zshrc-p10k"
+            SELECTED_THEME="p10k"
             install_powerlevel10k
             ;;
         *)
@@ -291,17 +310,11 @@ install_vscode_config() {
     fi
 
     # Install custom themes
-    if [ -d "$DOTFILES_DIR/vscode/themes" ]; then
+    if [ -d "$DOTFILES_DIR/vscode/themes" ] && command -v code &> /dev/null; then
         print_header "Installing Custom VSCode Themes"
 
-        # Determine VSCode extensions directory
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            VSCODE_EXT_DIR="$HOME/.vscode/extensions"
-        elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
-            VSCODE_EXT_DIR="$HOME/.vscode/extensions"
-        else
-            VSCODE_EXT_DIR="$HOME/.vscode/extensions"
-        fi
+        VSCODE_EXT_DIR="$HOME/.vscode/extensions"
+        mkdir -p "$VSCODE_EXT_DIR"
 
         # Copy theme directories
         for theme_dir in "$DOTFILES_DIR/vscode/themes"/*; do
@@ -319,6 +332,8 @@ install_vscode_config() {
                 print_success "Installed theme: $theme_name"
             fi
         done
+    elif [ -d "$DOTFILES_DIR/vscode/themes" ]; then
+        print_warning "VS Code not found — skipping custom theme installation"
     fi
 }
 
@@ -442,10 +457,46 @@ main() {
     esac
 
     print_header "Installation Complete!"
-    echo -e "\nNext steps:"
-    echo "  1. Update Git config with your name and email"
-    echo "  2. Reload your shell: exec \$SHELL"
-    echo "  3. Customize settings to your preference"
+    echo ""
+
+    # Shell switching instructions
+    if [ "$SHELL_CHANGED" = true ]; then
+        echo -e "${YELLOW}Your default shell was changed to zsh.${NC}"
+        echo -e "  To switch to zsh in this terminal right now, run:"
+        echo -e "  ${GREEN}exec zsh${NC}"
+        echo -e "  Or just open a new terminal — it will start in zsh automatically."
+        echo ""
+    fi
+
+    # Font instructions for Agnoster theme
+    if [ "$SELECTED_THEME" = "agnoster" ]; then
+        IS_WSL=false
+        if grep -q -i "microsoft" /proc/version 2>/dev/null || grep -q -i "wsl" /proc/version 2>/dev/null; then
+            IS_WSL=true
+        fi
+
+        if ! fc-list 2>/dev/null | grep -qi "MesloLGS NF"; then
+            echo -e "${YELLOW}The Agnoster theme requires the MesloLGS NF font, which is not installed.${NC}"
+            echo "  Re-run this installer and answer yes to install prerequisites to get the font."
+        else
+            echo -e "${YELLOW}Agnoster theme requires your terminal to use the MesloLGS NF font.${NC}"
+            if [ "$IS_WSL" = true ]; then
+                echo "  In Windows Terminal:"
+                echo "    Settings (Ctrl+,) → your Linux profile → Appearance → Font face → 'MesloLGS NF'"
+            else
+                echo "  In GNOME Terminal:"
+                echo "    Preferences → your profile → Text → uncheck 'Use the system fixed-width font'"
+                echo "    then set the font to 'MesloLGS NF Regular 12'"
+                echo "  Or re-run this installer and choose terminal config — it applies the font automatically."
+                echo "  After changing the font setting, restart GNOME Terminal."
+            fi
+        fi
+        echo ""
+    fi
+
+    echo "Other next steps:"
+    echo "  - Update your Git identity: git config --global user.name 'Name' && git config --global user.email 'you@example.com'"
+    echo "  - Customize other settings to your preference"
 }
 
 # Run main function
