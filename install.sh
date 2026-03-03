@@ -137,6 +137,102 @@ install_dependencies() {
         print_success "micro is already installed"
     fi
 
+    # build-essential
+    if ! dpkg -s build-essential &> /dev/null; then
+        read -p "build-essential (gcc, make, g++) is not installed. Install it? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            sudo apt install -y build-essential
+            print_success "build-essential installed"
+        fi
+    else
+        print_success "build-essential is already installed"
+    fi
+
+    # jq
+    if ! command -v jq &> /dev/null; then
+        read -p "jq is not installed. Install it? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            sudo apt install -y jq
+            print_success "jq installed"
+        fi
+    else
+        print_success "jq is already installed"
+    fi
+
+    # python3, pip, venv
+    if ! command -v python3 &> /dev/null; then
+        read -p "python3 is not installed. Install python3, pip, and venv? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            sudo apt install -y python3 python3-pip python3-venv
+            print_success "python3, pip, and venv installed"
+        fi
+    else
+        print_success "python3 is already installed ($(python3 --version))"
+        if ! python3 -m pip --version &> /dev/null; then
+            read -p "python3-pip is not installed. Install it? [y/N]: " -n 1 -r
+            echo
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                sudo apt install -y python3-pip python3-venv
+                print_success "python3-pip and python3-venv installed"
+            fi
+        else
+            print_success "python3-pip is already installed"
+        fi
+    fi
+
+    # fzf
+    if ! command -v fzf &> /dev/null; then
+        read -p "fzf (fuzzy finder) is not installed. Install it? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            sudo apt install -y fzf
+            print_success "fzf installed"
+        fi
+    else
+        print_success "fzf is already installed"
+    fi
+
+    # Docker + Docker Compose
+    if ! command -v docker &> /dev/null; then
+        read -p "Docker is not installed. Install Docker + Docker Compose? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            if command -v curl &> /dev/null; then
+                # Add Docker's official GPG key and repository
+                sudo apt install -y ca-certificates gnupg lsb-release
+                sudo install -m 0755 -d /etc/apt/keyrings
+                curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+                sudo chmod a+r /etc/apt/keyrings/docker.gpg
+                echo \
+                    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+                    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+                sudo apt update
+                sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+                # Allow running docker without sudo
+                sudo usermod -aG docker "$USER"
+                print_success "Docker and Docker Compose installed"
+                print_warning "Log out and back in (or run 'newgrp docker') for passwordless docker to take effect"
+            else
+                print_error "curl is required to install Docker"
+            fi
+        fi
+    else
+        print_success "Docker is already installed ($(docker --version))"
+        if ! docker compose version &> /dev/null; then
+            read -p "Docker Compose plugin is not installed. Install it? [y/N]: " -n 1 -r
+            echo
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                sudo apt install -y docker-compose-plugin
+                print_success "Docker Compose plugin installed"
+            fi
+        else
+            print_success "Docker Compose is already installed"
+        fi
+    fi
+
     # Oh My Zsh
     if [ ! -d "$HOME/.oh-my-zsh" ]; then
         read -p "Oh My Zsh is not installed. Install it? [y/N]: " -n 1 -r
@@ -194,6 +290,50 @@ install_dependencies() {
         else
             print_success "you-should-use plugin already installed"
         fi
+    fi
+
+    # nvm
+    if [ ! -d "$HOME/.nvm" ]; then
+        read -p "nvm is not installed. Install it? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            if command -v curl &> /dev/null; then
+                curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+                print_success "nvm installed"
+            else
+                print_error "curl is required to install nvm"
+            fi
+        fi
+    else
+        print_success "nvm is already installed"
+    fi
+
+    # node / npm (via nvm if available, otherwise check system)
+    if ! command -v node &> /dev/null; then
+        if [ -d "$HOME/.nvm" ]; then
+            read -p "node is not installed. Install latest LTS via nvm? [y/N]: " -n 1 -r
+            echo
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                # Source nvm so we can use it in this session
+                export NVM_DIR="$HOME/.nvm"
+                # shellcheck disable=SC1091
+                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                nvm install --lts
+                nvm use --lts
+                print_success "node (LTS) installed via nvm"
+            fi
+        else
+            print_warning "node is not installed. Install nvm first, then run: nvm install --lts"
+        fi
+    else
+        print_success "node is already installed ($(node --version))"
+    fi
+
+    # npm comes bundled with node — just report its status
+    if ! command -v npm &> /dev/null; then
+        print_warning "npm not found — it should be bundled with node. Try reinstalling node via nvm."
+    else
+        print_success "npm is already installed ($(npm --version))"
     fi
 
     # Set zsh as default shell
@@ -370,12 +510,16 @@ install_terminal_config() {
                 PROFILE_ID=$(dconf list /org/gnome/terminal/legacy/profiles:/ 2>/dev/null | head -1 | tr -d '/:')
             fi
 
-            if [ -n "$PROFILE_ID" ]; then
-                dconf load "/org/gnome/terminal/legacy/profiles:/:$PROFILE_ID/" < "$DOTFILES_DIR/gnome-terminal/rose-pine.dconf"
-                print_success "GNOME Terminal Rose Pine theme applied"
-            else
-                print_warning "No GNOME Terminal profile found, skipping"
+            if [ -z "$PROFILE_ID" ]; then
+                # No profile exists yet — create one
+                PROFILE_ID=$(uuidgen | tr '[:upper:]' '[:lower:]')
+                dconf write /org/gnome/terminal/legacy/profiles:/list "['$PROFILE_ID']"
+                dconf write /org/gnome/terminal/legacy/profiles:/default "'$PROFILE_ID'"
+                print_success "Created new GNOME Terminal profile ($PROFILE_ID)"
             fi
+
+            dconf load "/org/gnome/terminal/legacy/profiles:/:$PROFILE_ID/" < "$DOTFILES_DIR/gnome-terminal/rose-pine.dconf"
+            print_success "GNOME Terminal Rose Pine theme applied — restart the terminal to see it"
         fi
     fi
 
